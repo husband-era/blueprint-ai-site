@@ -359,35 +359,48 @@
 
     .service-card:hover::before { opacity: 1; }
 
-    .service-icon {
-      width: 64px;
-      height: 64px;
-      border-radius: 16px;
+    .service-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px 8px 10px;
+      border-radius: 40px;
+      background: linear-gradient(135deg, rgba(56,189,248,0.12), rgba(56,189,248,0.04));
+      border: 1px solid rgba(56,189,248,0.2);
+      margin-bottom: 16px;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .service-card:hover .service-badge {
+      box-shadow: 0 0 25px rgba(56,189,248,0.15);
+    }
+
+    .service-badge-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
-      margin-bottom: 24px;
-      background: linear-gradient(135deg, rgba(56,189,248,0.12), rgba(56,189,248,0.04));
-      border: 1px solid rgba(56,189,248,0.2);
-      color: var(--accent);
-      box-shadow: 0 0 20px rgba(56,189,248,0.08);
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      background: rgba(56,189,248,0.15);
+      flex-shrink: 0;
     }
 
-    .service-card:hover .service-icon {
-      box-shadow: 0 0 30px rgba(56,189,248,0.2);
-      transform: scale(1.05);
-    }
-
-    .service-icon svg {
-      width: 28px;
-      height: 28px;
+    .service-badge-icon svg {
+      width: 18px;
+      height: 18px;
       stroke: var(--accent);
       fill: none;
       stroke-width: 1.8;
       stroke-linecap: round;
       stroke-linejoin: round;
+    }
+
+    .service-badge-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
     }
 
     .service-features {
@@ -417,10 +430,7 @@
     }
 
     .service-card h3 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-      letter-spacing: -0.01em;
+      display: none;
     }
 
     .service-card p {
@@ -728,8 +738,9 @@
       <div class="services-grid">
 
         <div class="service-card reveal reveal-delay-1">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <div class="service-badge">
+            <div class="service-badge-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+            <span class="service-badge-name">Storefront</span>
           </div>
           <h3>Storefront</h3>
           <p>AI-built custom website designed around your brand. No templates, no drag-and-drop builders.</p>
@@ -742,8 +753,9 @@
         </div>
 
         <div class="service-card reveal reveal-delay-2">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          <div class="service-badge">
+            <div class="service-badge-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+            <span class="service-badge-name">Lead Engine</span>
           </div>
           <h3>Lead Engine</h3>
           <p>Automated lead generation that finds your customers before your competitors do.</p>
@@ -756,8 +768,9 @@
         </div>
 
         <div class="service-card reveal reveal-delay-3">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h.01M15 9h.01M9 15c.83.67 1.83 1 3 1s2.17-.33 3-1"/></svg>
+          <div class="service-badge">
+            <div class="service-badge-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h.01M15 9h.01M9 15c.83.67 1.83 1 3 1s2.17-.33 3-1"/></svg></div>
+            <span class="service-badge-name">AI Operations Suite</span>
           </div>
           <h3>AI Operations Suite</h3>
           <p>Your own digital employee — from support bots to a full AI Chief of Staff.</p>
@@ -770,8 +783,9 @@
         </div>
 
         <div class="service-card reveal reveal-delay-4">
-          <div class="service-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div class="service-badge">
+            <div class="service-badge-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <span class="service-badge-name">Reputation Shield</span>
           </div>
           <h3>Reputation Shield</h3>
           <p>AI-powered review management that protects and grows your online reputation.</p>
