@@ -5,598 +5,694 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Blueprint AI Studio — KeepOutFakeLove Proposal</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --bg: #0a0f1a;
-    --bg-card: #111827;
-    --border: rgba(56,189,248,0.12);
+    --bg: #08090e;
+    --bg-elevated: #10121a;
+    --bg-card: #13161f;
+    --border: rgba(255,255,255,0.06);
+    --border-accent: rgba(56,189,248,0.2);
     --text: #e2e8f0;
-    --text-muted: #94a3b8;
+    --text-dim: #7a8599;
+    --white: #ffffff;
     --accent: #38bdf8;
-    --accent-glow: rgba(56,189,248,0.15);
-    --green: #22c55e;
-    --red: #ef4444;
-    --orange: #f59e0b;
+    --accent-soft: rgba(56,189,248,0.08);
+    --green: #34d399;
+    --green-soft: rgba(52,211,153,0.1);
+    --red: #f87171;
+    --red-soft: rgba(248,113,113,0.1);
+    --amber: #fbbf24;
+    --radius: 16px;
   }
 
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'Inter', -apple-system, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--bg);
     color: var(--text);
-    line-height: 1.6;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
   }
 
+  /* ── Slide Layout ── */
   .slide {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 60px 24px;
-    position: relative;
+    padding: 80px 32px;
   }
-
-  .slide::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 10%;
-    right: 10%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border), transparent);
-  }
-
-  .slide:last-child::after { display: none; }
 
   .slide-inner {
-    max-width: 800px;
+    max-width: 720px;
     width: 100%;
   }
 
-  .slide-number {
-    font-size: 0.75rem;
+  /* ── Typography ── */
+  .eyebrow {
+    font-size: 0.7rem;
     font-weight: 600;
     color: var(--accent);
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    margin-bottom: 12px;
+    margin-bottom: 20px;
   }
 
   h1 {
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    font-weight: 800;
-    line-height: 1.15;
-    margin-bottom: 16px;
-    background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+    font-size: clamp(2.4rem, 5.5vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+  }
+
+  h1 .gradient {
+    background: linear-gradient(135deg, var(--white) 30%, var(--accent) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   h2 {
-    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
-    font-weight: 700;
-    margin-bottom: 24px;
-    color: #fff;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
   }
 
   h3 {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    color: #fff;
-    margin-bottom: 8px;
+    color: var(--white);
+    margin-bottom: 6px;
   }
 
-  .subtitle {
-    font-size: 1.15rem;
-    color: var(--text-muted);
-    max-width: 600px;
+  .lead {
+    font-size: 1.1rem;
+    color: var(--text-dim);
+    max-width: 540px;
+    line-height: 1.7;
+  }
+
+  .lead.center { margin: 0 auto; }
+
+  /* ── Cover ── */
+  .cover-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent-soft);
+    border: 1px solid var(--border-accent);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.5px;
     margin-bottom: 32px;
   }
 
-  .brand-line {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 40px;
-  }
-
-  .brand-line span {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-weight: 600;
-  }
-
-  .brand-dot {
+  .cover-badge .dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
     background: var(--accent);
   }
 
-  /* Pain cards */
-  .pain-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
+  .cover-sub {
+    font-size: 1.15rem;
+    color: var(--text-dim);
     margin-top: 8px;
+    max-width: 500px;
+    line-height: 1.7;
   }
 
-  .pain-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px 24px;
+  .cover-footer {
+    margin-top: 48px;
+    display: flex;
+    gap: 32px;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+
+  .cover-footer span { opacity: 0.6; }
+
+  /* ── Pain Points ── */
+  .pain-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .pain-item {
     display: flex;
     align-items: flex-start;
-    gap: 16px;
+    gap: 20px;
+    padding: 24px 28px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color 0.3s;
   }
 
-  .pain-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
+  .pain-item:hover { border-color: rgba(248,113,113,0.2); }
+
+  .pain-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 800;
     flex-shrink: 0;
-    font-size: 1.4rem;
+    background: var(--red-soft);
+    color: var(--red);
   }
 
-  .pain-icon.red { background: rgba(239,68,68,0.12); }
-  .pain-icon.orange { background: rgba(245,158,11,0.12); }
-  .pain-icon.yellow { background: rgba(234,179,8,0.12); }
+  .pain-item h3 { margin-bottom: 4px; }
 
-  .pain-card p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    margin-top: 4px;
+  .pain-item p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.6;
   }
 
-  /* Solution cards */
-  .solution-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
-    margin-top: 8px;
+  /* ── Solution Cards ── */
+  .solutions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 32px;
   }
 
-  .solution-card {
-    background: var(--bg-card);
+  .sol-card {
+    background: var(--bg-elevated);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 32px 28px;
+    border-radius: var(--radius);
+    padding: 32px;
     position: relative;
     overflow: hidden;
+    transition: border-color 0.3s;
   }
 
-  .solution-card::before {
-    content: '';
+  .sol-card:hover { border-color: var(--border-accent); }
+
+  .sol-card .accent-line {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent), #818cf8);
+    width: 80px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 0 0 2px 0;
   }
 
-  .solution-tag {
-    display: inline-block;
-    font-size: 0.7rem;
+  .sol-label {
+    font-size: 0.65rem;
     font-weight: 700;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--accent);
-    background: var(--accent-glow);
-    padding: 4px 12px;
-    border-radius: 20px;
-    margin-bottom: 14px;
-  }
-
-  .solution-card h3 {
-    font-size: 1.25rem;
     margin-bottom: 12px;
   }
 
-  .solution-card p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    margin-bottom: 16px;
+  .sol-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
   }
 
-  .solution-bullets {
+  .sol-card .desc {
+    font-size: 0.92rem;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    line-height: 1.65;
+  }
+
+  .check-list {
     list-style: none;
     padding: 0;
-  }
-
-  .solution-bullets li {
-    padding: 6px 0;
-    font-size: 0.9rem;
-    color: var(--text);
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .check-list li {
+    display: flex;
+    align-items: center;
     gap: 10px;
+    font-size: 0.88rem;
+    color: var(--text);
   }
 
-  .solution-bullets li::before {
-    content: '✓';
-    color: var(--green);
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-
-  /* Stack */
-  .stack-row {
+  .check {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--green-soft);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin: 32px 0;
+    flex-shrink: 0;
   }
 
-  .stack-item {
-    background: var(--bg-card);
+  .check svg {
+    width: 10px;
+    height: 10px;
+    stroke: var(--green);
+    stroke-width: 3;
+    fill: none;
+  }
+
+  /* ── Flow Diagram ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 40px 0 20px;
+  }
+
+  .flow-node {
+    background: var(--bg-elevated);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 20px 28px;
+    padding: 18px 24px;
     text-align: center;
-    min-width: 120px;
+    min-width: 110px;
+    transition: border-color 0.3s;
   }
 
-  .stack-item .stack-name {
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: #fff;
+  .flow-node:hover { border-color: var(--border-accent); }
+
+  .flow-node .name {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--white);
   }
 
-  .stack-item .stack-role {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    margin-top: 4px;
+  .flow-node .role {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-top: 2px;
   }
 
-  .arrow {
-    font-size: 1.5rem;
+  .flow-arrow {
     color: var(--accent);
+    font-size: 1.1rem;
+    opacity: 0.6;
   }
 
-  /* Pricing */
-  .pricing-box {
-    background: var(--bg-card);
-    border: 1px solid var(--accent);
+  /* ── Comparison ── */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  .compare-side {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+  }
+
+  .compare-side.good { border-color: var(--border-accent); }
+
+  .compare-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .compare-label.bad { color: var(--red); }
+  .compare-label.good { color: var(--green); }
+
+  .compare-items {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .compare-items li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .compare-items .marker {
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-size: 0.85rem;
+  }
+
+  /* ── Pricing ── */
+  .pricing {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-accent);
     border-radius: 20px;
-    padding: 40px 36px;
+    padding: 48px 40px;
     text-align: center;
-    margin-top: 16px;
+    margin-top: 24px;
     position: relative;
     overflow: hidden;
   }
 
-  .pricing-box::before {
+  .pricing::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at top, var(--accent-glow), transparent 70%);
-    pointer-events: none;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
   }
 
-  .price-row {
-    display: flex;
-    justify-content: center;
-    gap: 48px;
-    flex-wrap: wrap;
-    margin: 28px 0;
-    position: relative;
-  }
-
-  .price-item {
-    text-align: center;
-  }
-
-  .price-amount {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: #fff;
-  }
-
-  .price-label {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin-top: 4px;
-  }
-
-  .price-note {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    max-width: 500px;
-    margin: 0 auto;
-  }
-
-  .savings-badge {
+  .pricing .badge {
     display: inline-block;
-    background: rgba(34,197,94,0.12);
+    background: var(--green-soft);
     color: var(--green);
     font-weight: 700;
-    font-size: 0.85rem;
-    padding: 6px 16px;
-    border-radius: 20px;
-    margin-bottom: 20px;
+    font-size: 0.78rem;
+    padding: 6px 18px;
+    border-radius: 100px;
+    letter-spacing: 0.5px;
+    margin-bottom: 28px;
   }
 
-  /* Before / After */
-  .compare-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-top: 16px;
-  }
-
-  .compare-col {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px 24px;
-  }
-
-  .compare-col.after {
-    border-color: var(--accent);
-  }
-
-  .compare-header {
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  .compare-header.before { color: var(--red); }
-  .compare-header.after { color: var(--green); }
-
-  .compare-list {
-    list-style: none;
-    padding: 0;
-  }
-
-  .compare-list li {
-    padding: 8px 0;
-    font-size: 0.9rem;
-    color: var(--text-muted);
+  .price-cols {
     display: flex;
-    align-items: flex-start;
-    gap: 10px;
+    justify-content: center;
+    gap: 56px;
+    margin-bottom: 28px;
   }
 
-  .compare-list li .icon { flex-shrink: 0; }
+  .price-col { text-align: center; }
 
-  /* CTA */
-  .cta-btn {
-    display: inline-block;
-    margin-top: 28px;
-    padding: 16px 40px;
-    background: var(--accent);
-    color: #0a0f1a;
-    font-weight: 700;
+  .price-num {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .price-num .suffix {
     font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-dim);
+  }
+
+  .price-desc {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
+
+  .pricing .fine-print {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ── CTA ── */
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 32px;
+    padding: 16px 36px;
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 700;
+    font-size: 0.95rem;
     border-radius: 12px;
     text-decoration: none;
+    letter-spacing: 0.2px;
     transition: all 0.3s;
   }
 
   .cta-btn:hover {
-    background: #7dd3fc;
+    background: var(--white);
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(56,189,248,0.3);
+    box-shadow: 0 12px 40px rgba(56,189,248,0.2);
   }
 
-  .footer-note {
-    margin-top: 32px;
-    font-size: 0.8rem;
-    color: var(--text-muted);
+  .cta-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    fill: none;
   }
 
-  /* Responsive */
+  .footer-line {
+    margin-top: 40px;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    opacity: 0.5;
+    letter-spacing: 1px;
+  }
+
+  /* ── Print ── */
+  @media print {
+    body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .slide { min-height: auto; page-break-inside: avoid; page-break-after: always; padding: 48px 32px; }
+    .slide:last-child { page-break-after: auto; }
+  }
+
+  /* ── Mobile ── */
   @media (max-width: 640px) {
-    .compare-grid { grid-template-columns: 1fr; }
-    .price-row { gap: 28px; }
-    .slide { padding: 40px 20px; }
+    .slide { padding: 48px 20px; }
+    .compare { grid-template-columns: 1fr; }
+    .price-cols { flex-direction: column; gap: 24px; }
+    .cover-footer { flex-direction: column; gap: 8px; }
   }
 </style>
 </head>
 <body>
 
-<!-- SLIDE 1: Cover -->
+<!-- ═══════ SLIDE 1 · COVER ═══════ -->
 <div class="slide">
   <div class="slide-inner" style="text-align: center;">
-    <div class="brand-line" style="justify-content: center;">
-      <span>Blueprint AI Studio</span>
-      <div class="brand-dot"></div>
-      <span>Proposal</span>
+    <div class="cover-badge">
+      <span class="dot"></span>
+      Blueprint AI Studio · Proposal
     </div>
-    <h1>AI-Powered Operations<br>for KeepOutFakeLove</h1>
-    <p class="subtitle" style="margin: 16px auto 0;">Automate your orders, follow-ups, and buyer communications — so you can focus on the brand, not the busywork.</p>
+    <h1><span class="gradient">AI-Powered Operations</span><br>for KeepOutFakeLove</h1>
+    <p class="cover-sub">Automate your orders, follow-ups, and buyer communications — so you can focus on the brand, not the busywork.</p>
+    <div class="cover-footer" style="justify-content: center;">
+      <span>Prepared March 2026</span>
+      <span>·</span>
+      <span>blueprintaistudio.com</span>
+    </div>
   </div>
 </div>
 
-<!-- SLIDE 2: The Problem -->
+<!-- ═══════ SLIDE 2 · THE PROBLEM ═══════ -->
 <div class="slide">
   <div class="slide-inner">
-    <div class="slide-number">The Problem</div>
-    <h2>You're spending hours on work<br>a machine should be doing.</h2>
-    <div class="pain-grid">
-      <div class="pain-card">
-        <div class="pain-icon red">📩</div>
+    <div class="eyebrow">The Problem</div>
+    <h2>You're spending hours on work a machine should handle.</h2>
+    <p class="lead">Every drop cycle, the same manual grind repeats. These three bottlenecks are costing you time, money, and missed orders.</p>
+
+    <div class="pain-list">
+      <div class="pain-item">
+        <div class="pain-num">01</div>
         <div>
           <h3>Manual Order Link Distribution</h3>
-          <p>Every drop, you're manually sending ordering links to buyers via email and text. One by one. That doesn't scale.</p>
+          <p>Every drop, you're sending ordering links to buyers one by one via email and text. It's slow, repetitive, and doesn't scale.</p>
         </div>
       </div>
-      <div class="pain-card">
-        <div class="pain-icon orange">⏰</div>
+      <div class="pain-item">
+        <div class="pain-num">02</div>
         <div>
           <h3>No Follow-Up System</h3>
-          <p>After sending the list, there's no automated way to know who ordered and who ghosted. Buyers slip through the cracks.</p>
+          <p>After sending the list, there's no way to automatically know who ordered and who ghosted. Buyers slip through the cracks every cycle.</p>
         </div>
       </div>
-      <div class="pain-card">
-        <div class="pain-icon yellow">📋</div>
+      <div class="pain-item">
+        <div class="pain-num">03</div>
         <div>
-          <h3>Manual Data Entry for Orders</h3>
-          <p>You're manually inputting every order into spreadsheets. It's slow, error-prone, and eats hours every week.</p>
+          <h3>Manual Data Entry</h3>
+          <p>Every order gets manually typed into spreadsheets. It's slow, error-prone, and eats hours that should go toward growing the brand.</p>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 3: The Solution -->
+<!-- ═══════ SLIDE 3 · THE SOLUTION ═══════ -->
 <div class="slide">
   <div class="slide-inner">
-    <div class="slide-number">The Solution</div>
-    <h2>Three AI systems that run<br>your operations on autopilot.</h2>
-    <div class="solution-grid">
+    <div class="eyebrow">The Solution</div>
+    <h2>Three AI systems.<br>Fully automated operations.</h2>
+    <p class="lead">Each system solves one of your core bottlenecks. They work together, run 24/7, and require zero manual input.</p>
 
-      <div class="solution-card">
-        <div class="solution-tag">Automation 1</div>
-        <h3>⚡ Auto-Send Order Links</h3>
-        <p>When a new drop goes live on Brandboom, your buyer list automatically gets the ordering link via SMS and email — personalized, instant, zero manual work.</p>
-        <ul class="solution-bullets">
-          <li>Triggered by new Brandboom product/collection</li>
-          <li>Sends personalized SMS + email to your full buyer list</li>
-          <li>Buyers get the link in seconds, not hours</li>
+    <div class="solutions">
+      <div class="sol-card">
+        <div class="accent-line"></div>
+        <div class="sol-label">System 01</div>
+        <h3>Auto-Send Order Links</h3>
+        <p class="desc">When a new drop goes live on Brandboom, your entire buyer list gets the ordering link automatically — via SMS and email, personalized, in seconds.</p>
+        <ul class="check-list">
+          <li><span class="check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span> Triggered instantly by new Brandboom collections</li>
+          <li><span class="check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span> Personalized SMS + email to every buyer</li>
+          <li><span class="check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span> Buyers get the link in seconds, not hours</li>
         </ul>
       </div>
 
-      <div class="solution-card">
-        <div class="solution-tag">Automation 2</div>
-        <h3>🔁 Smart Follow-Up Sequences</h3>
-        <p>AI automatically tracks who ordered and who didn't, then follows up at the perfect time with the right message.</p>
-        <ul class="solution-bullets">
-          <li>24h / 48h / 72h automated follow-up cadence</li>
-          <li>Different message if they ordered vs. ghosted</li>
-          <li>Flags "no response" buyers for your personal outreach</li>
+      <div class="sol-card">
+        <div class="accent-line"></div>
+        <div class="sol-label">System 02</div>
+        <h3>Smart Follow-Up Sequences</h3>
+        <p class="desc">AI tracks who ordered and who didn't, then automatically follows up at 24h, 48h, and 72h with the right message for each buyer.</p>
+        <ul class="check-list">
+          <li><span class="check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span> Automated 24h / 48h / 72h follow-up cadence</li>
+          <li><span class="check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span> Different messaging for buyers vs. no-shows</li>
+          <li><span class="check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span> Flags unresponsive buyers for your personal outreach</li>
         </ul>
       </div>
 
-      <div class="solution-card">
-        <div class="solution-tag">Automation 3</div>
-        <h3>📊 AI Order Dashboard</h3>
-        <p>Every Brandboom order auto-populates into a clean, organized dashboard. No more manual input — ever.</p>
-        <ul class="solution-bullets">
-          <li>Real-time sync from Brandboom → organized dashboard</li>
-          <li>Buyer name, items, payment status, shipping status</li>
-          <li>Weekly AI summary report texted to your phone</li>
+      <div class="sol-card">
+        <div class="accent-line"></div>
+        <div class="sol-label">System 03</div>
+        <h3>AI Order Dashboard</h3>
+        <p class="desc">Every Brandboom order auto-populates into a clean, organized dashboard in real time. No manual input — ever.</p>
+        <ul class="check-list">
+          <li><span class="check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span> Real-time sync from Brandboom → live dashboard</li>
+          <li><span class="check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span> Buyer, items, payment status, shipping — all tracked</li>
+          <li><span class="check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span> Weekly AI summary report texted to your phone</li>
         </ul>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- SLIDE 4: Tech Stack -->
+<!-- ═══════ SLIDE 4 · HOW IT WORKS ═══════ -->
 <div class="slide">
   <div class="slide-inner" style="text-align: center;">
-    <div class="slide-number">How It Works</div>
-    <h2>The Engine Under the Hood</h2>
-    <p class="subtitle" style="margin: 0 auto 12px;">Your existing Brandboom store connects to our automation layer. Nothing changes on your end — we plug in behind the scenes.</p>
-    <div class="stack-row">
-      <div class="stack-item">
-        <div class="stack-name">Brandboom</div>
-        <div class="stack-role">Your Store</div>
+    <div class="eyebrow">How It Works</div>
+    <h2>We plug in behind the scenes.</h2>
+    <p class="lead center">Your Brandboom store stays exactly as-is. We connect our automation layer underneath — nothing changes on your end.</p>
+
+    <div class="flow">
+      <div class="flow-node">
+        <div class="name">Brandboom</div>
+        <div class="role">Your Store</div>
       </div>
-      <div class="arrow">→</div>
-      <div class="stack-item">
-        <div class="stack-name">AI Engine</div>
-        <div class="stack-role">Automation</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="name">AI Engine</div>
+        <div class="role">Automation Layer</div>
       </div>
-      <div class="arrow">→</div>
-      <div class="stack-item">
-        <div class="stack-name">SMS + Email</div>
-        <div class="stack-role">Buyer Comms</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="name">SMS + Email</div>
+        <div class="role">Buyer Comms</div>
       </div>
     </div>
-    <div class="stack-row">
-      <div class="stack-item">
-        <div class="stack-name">Dashboard</div>
-        <div class="stack-role">Order Tracking</div>
+
+    <div class="flow">
+      <div class="flow-node">
+        <div class="name">Dashboard</div>
+        <div class="role">Order Tracking</div>
       </div>
-      <div class="arrow">→</div>
-      <div class="stack-item">
-        <div class="stack-name">Weekly Report</div>
-        <div class="stack-role">Your Phone</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="name">Weekly Report</div>
+        <div class="role">Your Phone</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 5: Before / After -->
+<!-- ═══════ SLIDE 5 · BEFORE / AFTER ═══════ -->
 <div class="slide">
   <div class="slide-inner">
-    <div class="slide-number">The Transformation</div>
-    <h2>Before vs. After Blueprint AI</h2>
-    <div class="compare-grid">
-      <div class="compare-col">
-        <div class="compare-header before">❌ TODAY</div>
-        <ul class="compare-list">
-          <li><span class="icon">😩</span> Manually texting/emailing every buyer</li>
-          <li><span class="icon">😩</span> No idea who ordered and who didn't</li>
-          <li><span class="icon">😩</span> Manually typing orders into spreadsheets</li>
-          <li><span class="icon">😩</span> 5-10+ hours/week on admin work</li>
-          <li><span class="icon">😩</span> Buyers slip through the cracks</li>
+    <div class="eyebrow">The Transformation</div>
+    <h2>Before vs. After</h2>
+
+    <div class="compare">
+      <div class="compare-side">
+        <div class="compare-label bad">Without Blueprint AI</div>
+        <ul class="compare-items">
+          <li><span class="marker">✕</span> Manually texting and emailing every buyer</li>
+          <li><span class="marker">✕</span> No visibility into who ordered or ghosted</li>
+          <li><span class="marker">✕</span> Manually typing every order into spreadsheets</li>
+          <li><span class="marker">✕</span> 5–10+ hours per week on admin work</li>
+          <li><span class="marker">✕</span> Buyers slip through the cracks each drop</li>
         </ul>
       </div>
-      <div class="compare-col after">
-        <div class="compare-header after">✅ WITH BLUEPRINT AI</div>
-        <ul class="compare-list">
-          <li><span class="icon">⚡</span> Order links sent automatically in seconds</li>
-          <li><span class="icon">⚡</span> Smart follow-ups chase buyers for you</li>
-          <li><span class="icon">⚡</span> Orders auto-organized, zero data entry</li>
-          <li><span class="icon">⚡</span> 30 minutes/week max oversight</li>
-          <li><span class="icon">⚡</span> Every buyer gets touched, every time</li>
+      <div class="compare-side good">
+        <div class="compare-label good">With Blueprint AI</div>
+        <ul class="compare-items">
+          <li><span class="marker">✓</span> Order links sent automatically in seconds</li>
+          <li><span class="marker">✓</span> Smart follow-ups chase buyers for you</li>
+          <li><span class="marker">✓</span> Orders auto-organized, zero data entry</li>
+          <li><span class="marker">✓</span> 30 minutes per week, max</li>
+          <li><span class="marker">✓</span> Every buyer gets touched, every single time</li>
         </ul>
       </div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 6: Pricing -->
+<!-- ═══════ SLIDE 6 · PRICING ═══════ -->
 <div class="slide">
   <div class="slide-inner" style="text-align: center;">
-    <div class="slide-number">Investment</div>
-    <h2>Simple, Transparent Pricing</h2>
-    <div class="pricing-box">
-      <div class="savings-badge">💰 Save 5-10+ hours every week</div>
-      <div class="price-row">
-        <div class="price-item">
-          <div class="price-amount">$1,500</div>
-          <div class="price-label">One-Time Setup & Build</div>
+    <div class="eyebrow">Investment</div>
+    <h2>Simple, transparent pricing.</h2>
+
+    <div class="pricing">
+      <div class="badge">Save 5–10+ hours every week</div>
+      <div class="price-cols">
+        <div class="price-col">
+          <div class="price-num">$1,500</div>
+          <div class="price-desc">One-time setup & build</div>
         </div>
-        <div class="price-item">
-          <div class="price-amount">$499<span style="font-size: 1rem; font-weight: 500;">/mo</span></div>
-          <div class="price-label">Ongoing Operations & Support</div>
+        <div class="price-col">
+          <div class="price-num">$499<span class="suffix">/mo</span></div>
+          <div class="price-desc">Ongoing operations & support</div>
         </div>
       </div>
-      <p class="price-note">Setup includes full architecture build, Brandboom integration, buyer list import, SMS/email configuration, dashboard setup, and testing. Monthly covers server infrastructure, SMS/email sending costs, AI compute, and ongoing optimization.</p>
+      <p class="fine-print">Setup includes full architecture build, Brandboom integration, buyer list import, SMS/email configuration, dashboard setup, and end-to-end testing. Monthly covers infrastructure, sending costs, AI compute, and ongoing optimization.</p>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 7: CTA -->
+<!-- ═══════ SLIDE 7 · CTA ═══════ -->
 <div class="slide">
   <div class="slide-inner" style="text-align: center;">
-    <div class="slide-number">Next Step</div>
-    <h1>Ready to put your operations<br>on autopilot?</h1>
-    <p class="subtitle" style="margin: 0 auto 8px;">Book a 15-minute call. We'll map out your Brandboom setup, show you exactly how each automation works, and have you live within 2 weeks.</p>
-    <a href="https://calendly.com/captainopenclaw/30min" class="cta-btn">Book Your Discovery Call →</a>
-    <p class="footer-note">Blueprint AI Studio · blueprintaistudio.com</p>
+    <div class="eyebrow">Next Step</div>
+    <h1><span class="gradient">Ready to put your<br>operations on autopilot?</span></h1>
+    <p class="lead center">Book a 15-minute discovery call. We'll map your Brandboom setup, walk through each automation, and have you live within two weeks.</p>
+    <a href="https://calendly.com/captainopenclaw/30min" class="cta-btn">
+      Book a Call
+      <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+    <div class="footer-line">BLUEPRINT AI STUDIO · BLUEPRINTAISTUDIO.COM</div>
   </div>
 </div>
 
