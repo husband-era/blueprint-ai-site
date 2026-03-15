@@ -109,14 +109,13 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: var(--accent-soft);
-    border: 1px solid var(--border-accent);
-    padding: 6px 16px;
-    border-radius: 100px;
+    background: transparent;
+    padding: 6px 0;
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--accent);
-    letter-spacing: 0.5px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
     margin-bottom: 32px;
   }
 
@@ -129,9 +128,9 @@
 
   .cover-sub {
     font-size: 1.15rem;
-    color: var(--text-dim);
+    color: var(--text);
     margin-top: 8px;
-    max-width: 500px;
+    max-width: 520px;
     line-height: 1.7;
   }
 
@@ -476,10 +475,12 @@
   }
 
   /* ── Print ── */
+  @page { margin: 0; size: letter; }
   @media print {
-    body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-    .slide { min-height: auto; page-break-inside: avoid; page-break-after: always; padding: 48px 32px; }
+    body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; background: var(--bg) !important; }
+    .slide { min-height: 0 !important; height: 100vh; padding: 60px 48px; display: flex; flex-direction: column; justify-content: center; align-items: center; page-break-after: always; overflow: hidden; }
     .slide:last-child { page-break-after: auto; }
+    .cover-badge { border: none; }
   }
 
   /* ── Mobile ── */
