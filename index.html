@@ -324,16 +324,8 @@
 
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 20px;
-    }
-
-    .services-grid-row2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      max-width: 66.66%;
-      margin: 20px auto 0;
     }
 
     .service-card.featured {
@@ -727,7 +719,6 @@
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1024px) {
       .services-grid { grid-template-columns: repeat(2, 1fr); }
-      .services-grid-row2 { max-width: 100%; grid-template-columns: repeat(2, 1fr); }
       .service-card p { font-size: 0.9rem; }
       .service-features li { font-size: 0.85rem; }
       .trust-grid { grid-template-columns: repeat(2, 1fr); }
@@ -752,7 +743,7 @@
       .mobile-toggle { display: block; }
 
       .services-grid { grid-template-columns: 1fr; }
-      .services-grid-row2 { max-width: 100%; grid-template-columns: 1fr; }
+
       .steps-grid {
         grid-template-columns: 1fr;
         max-width: 360px;
@@ -862,24 +853,6 @@
             <li>Tiered plans from Assistant to full Chief of Staff</li>
           </ul>
           <span class="service-price">From $299/mo to $1,500/mo</span>
-        </div>
-
-      </div>
-
-      <div class="services-grid-row2">
-        <div class="service-card reveal reveal-delay-4">
-          <div class="service-badge">
-            <div class="service-badge-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-            <span class="service-badge-name">Reputation Shield</span>
-          </div>
-          <h3>Reputation Shield</h3>
-          <p>AI-powered review management that protects and grows your online reputation.</p>
-          <ul class="service-features">
-            <li>Automated Google review monitoring & alerts</li>
-            <li>AI-crafted responses to positive & negative reviews</li>
-            <li>Monthly reputation reports & sentiment analysis</li>
-          </ul>
-          <span class="service-price">Automated monitoring</span>
         </div>
 
         <div class="service-card featured reveal reveal-delay-4">
